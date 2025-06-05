@@ -1,0 +1,453 @@
+﻿@using ThienAnFuni.Extensions
+@using ThienAnFuni.Helpers
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta title="Nội thất Thiên Ân"
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/customerThienAn/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/customerThienAn/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/customerThienAn/css/snowflake.css" type="text/css" />
+
+</head>
+
+<body>
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+        <div class="snowflake">
+            <div class="inner">❅</div>
+        </div>
+    </div>
+    <!-- Page Preloder -->
+    @* <div id="preloder">
+    <div class="loader"></div>
+    </div> *@
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="@Url.Action("Index", "Home")"><img src="/customerThienAn/img/logo.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li>
+                    <a asp-controller="Cart" asp-action="Index">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span class="span__quantity_cart">
+                            @Context.Session.GetCustomInt32("totalQuantity")
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="header__cart__price">
+                Tổng tiền:
+                <span>
+                    @Context.Session.GetDecimal("total").ToString("N0", new
+                             System.Globalization.CultureInfo("vi-VN"))đ
+                </span>
+            </div>
+
+        </div>
+        <div class="humberger__menu__widget">
+            <div class="header__top__right__language">
+                <img src="/customerThienAn/img/vietnamese.jpg" width="20" alt="">
+                <div>Vietnamese</div>
+                @* <span class="arrow_carrot-down"></span> *@
+                <ul>
+                    <li><a href="#">Vietnamese</a></li>
+                </ul>
+            </div>
+
+            <div class="header__top__right__auth">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Profile" class="d-inline-block text-truncate" style="max-width: 150px;">
+                        <span>Hi, @User.Identity.Name</span>
+                    </a>
+
+                    @if (User.IsInRole(ConstHelper.RoleManager) && User.IsInRole(ConstHelper.RoleSaleStaff))
+                    {
+                        <!-- Nút Admin sẽ chỉ hiển thị nếu người dùng là Admin -->
+                        <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary">
+                            <i class="fa fa-cogs"></i> Admin Dashboard
+                        </a>
+                    }
+
+                    <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
+                        <button type="submit" class="btn p-1 text-danger font-weight-bold">
+                            <i class="fa fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Login</a>
+                }
+            </div>
+
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Shop"  ? "active" : "")">
+                    <a asp-controller="Shop" asp-action="Index">Shop</a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Orders"  ? "active" : "")">
+                    <a asp-controller="Orders" asp-action="Index">
+                        Đơn hàng
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Contact"  ? "active" : "")">
+                    <a asp-controller="Contact" asp-action="Index">Liên hệ</a>
+                </li>
+
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href="https://www.facebook.com/ariety06/" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/_nhw.yie24/" target="_blank"><i class="fa fa-instagram"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><i class="fa fa-envelope"></i> thienanteam@ctuet.edu.vn</li>
+                <li>Freeship nội thành.</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> thienanteam@ctuet.edu.vn</li>
+                                <li>Freeship nội thành.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right d-flex align-items-center justify-content-around text-nowrap">
+                            <div class="header__top__right__social">
+                                <a href="https://www.facebook.com/ariety06/" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="https://www.instagram.com/_nhw.yie24/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            </div>
+                            <div class="header__top__right__language">
+                                <img src="/customerThienAn/img/vietnamese.jpg" width="30" alt="">
+                                <div>Vietnamese</div>
+                                @* <span class="arrow_carrot-down"></span> *@
+                                <ul>
+                                    <li><a href="#">Vietnamese</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="header__top__right__auth d-flex justify-content-center align-items-center">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Account" asp-action="Profile" class="d-inline-block text-truncate" style="max-width: 150px;">
+                                        <span>Hi, @User.Identity.Name</span>
+                                    </a>
+
+                                    <!-- Nút Admin sẽ chỉ hiển thị nếu người dùng là Manager hoặc SaleStaff -->
+                                    @if (User.IsInRole(ConstHelper.RoleManager) || User.IsInRole(ConstHelper.RoleSaleStaff))
+                                    {
+                                        <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary ml-2 btn-sm text-white">
+                                            <i class="fa fa-cogs m-0"></i>
+                                        </a>
+                                    }
+
+                                    <form action="@Url.Action("Logout", "Account")" method="post" style="display:inline;">
+                                        <button type="submit" class="btn p-1 text-danger font-weight-bold">
+                                            <i class="fa fa-sign-out-alt"></i> Logout
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Login</a>
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="@Url.ActionLink("Index","Home")">
+                            <img src="/customerThienAn/img/logo.png"
+                                 alt="Logo FuniShop">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                    <nav class="header__menu">
+                        @* Bê thằng ở trên xuống *@
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Shop"  ? "active" : "")">
+                                <a asp-controller="Shop" asp-action="Index">Shop</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Orders"  ? "active" : "")">
+                                <a asp-controller="Orders" asp-action="Index">
+                                    Đơn hàng
+                                </a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Contact"  ? "active" : "")">
+                                <a asp-controller="Contact" asp-action="Index">Liên hệ</a>
+                            </li>
+
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a asp-controller="Cart" asp-action="Index">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="span__quantity_cart">
+                                        @Context.Session.GetCustomInt32("totalQuantity")
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__cart__price">
+                            Tổng tiền:
+                            <span>
+                                @Context.Session.GetDecimal("total").ToString("N0", new
+                                         System.Globalization.CultureInfo("vi-VN"))đ
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    <!-- Hero Section Begin hero-normal-->
+    @*    <section class="hero @(Context.Request.Path == "/" ? "" : "hero-normal")"> *@
+    <section class="hero @(Context.Request.Path == "/" ||
+                      (ViewContext.RouteData.Values["controller"]?.ToString() == "Home"
+                      && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+                      ? "" : "hero-normal")">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục</span>
+                        </div>
+
+                        @await Component.InvokeAsync("CategoryHero")
+
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            @* Xử lý tìm kiếm, cho nó sang 1 page riêng *@
+                            <form action="@Url.Action("Index", "Shop")" method="get">
+                                @* <input type="text" name="query" placeholder="Bạn muốn tìm gì?" value=""> *@
+                                <input type="text" name="query" placeholder="Bạn muốn tìm gì?"
+                                       value="@ViewContext.HttpContext.Request.Query["query"]">
+                                <button type="submit" class="site-btn">Tìm kiếm</button>
+                            </form>
+
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5 class="text-black"> <a class="btn font-weight-bold" href="tel:+8430041975">+84 30 04 1975</a></h5>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                    @* renderSection *@
+                    @RenderSection("background_home", required: false)
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+    @RenderSection("breadcrumb", required: false)
+    @RenderBody()
+    @* <div class="container">
+    <main role="main" class="pb-3">
+    </main>
+    </div> *@
+
+    <!-- Footer Section Begin -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="@Url.ActionLink("Index","Home")"><img src="/customerThienAn/img/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: 256 Nguyễn Văn Cừ, An Hòa, Ninh Kiều, Cần Thơ</li>
+                            <li>Phone: +84 30 04 1975</li>
+                            <li>Email: thienanteam@ctuet.edu.vn</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Chính sách</h6>
+                        <ul class="w-100">
+                            <li><a href="#">Hướng Dẫn Mua Hàng</a></li>
+                            <li><a href="#">Chính sách bảo mật dữ liệu</a></li>
+                            <li><a href="#">Chính sách xử lý dữ liệu cá nhân</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Chính sách bán hàng</a></li>
+                            <li><a href="#">Chính sách kiểm hàng</a></li>
+                            <li><a href="#">Chính sách đổi trả</a></li>
+                            <li><a href="#">Chính sách hoàn tiền</a></li>
+                            <li><a href="#">Quy chế hoạt động</a></li>
+                            <li><a href="#">Chính sách vận chuyển</a></li>
+                            <li>
+                                <a href="#">Chính sách giao hàng và thanh toán</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Liên hệ</h6>
+                        <p>
+                            Nhận thông tin cập nhật qua Email về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt.
+                        </p>
+                        <form action="#">
+                            <input type="text" placeholder="Địa chỉ mail của bạn">
+                            <button type="submit" class="site-btn">Đăng ký</button>
+                        </form>
+                        <div class="footer__widget__social">
+                            <a href="https://www.facebook.com/ariety06/" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/_nhw.yie24/" target="_blank"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> | Bản quyền được giữ bởi
+                                ThienAnTeam
+                            </p>
+                        </div>
+                        <div class="footer__copyright__payment">
+                            <img src="/customerThienAn/img/payment-item.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header__top__right__social">
+                <a href="https://zalo.me/0982147252" target="_blank">
+                    <img src="/customerThienAn/img/icon_zalo.png" alt="Zalo" class="zalo-icon social-icon.zalo">
+                </a>
+
+                @*                 <a href="#" target="_blank">
+                <img src="/customerThienAn/img" alt="Instagram" class="zalo-icon social-icon.instagram" >
+                </a> *@
+
+            </div>
+
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Js Plugins -->
+    <script src="/customerThienAn/js/jquery-3.3.1.min.js"></script>
+    <script src="/customerThienAn/js/bootstrap.min.js"></script>
+    <script src="/customerThienAn/js/jquery.nice-select.min.js"></script>
+    <script src="/customerThienAn/js/jquery-ui.min.js"></script>
+    <script src="/customerThienAn/js/jquery.slicknav.js"></script>
+    <script src="/customerThienAn/js/mixitup.min.js"></script>
+    <script src="/customerThienAn/js/owl.carousel.min.js"></script>
+    <script src="/customerThienAn/js/main.js"></script>
+    <script src="/customerThienAn/js/addToCart.js"></script>
+    <script src="/customerThienAn/js/incQuantitySession.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

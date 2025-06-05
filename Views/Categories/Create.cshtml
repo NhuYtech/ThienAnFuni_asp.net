@@ -1,0 +1,95 @@
+﻿@model ThienAnFuni.Models.Category
+
+@{
+    ViewData["Title"] = "Thêm mới danh mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="app-title">
+    <ul class="app-breadcrumb breadcrumb side">
+        <li class="breadcrumb-item active"><a href="#"><b>Danh sách danh mục</b></a></li>
+    </ul>
+    <div id="clock"></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-warning btn-sm" asp-controller="Categories" asp-action="Index" title="Trở về">
+                            Trở về
+                        </a>
+                    </div>
+                </div>
+                @{
+                    var errorMessage = TempData["ErrorMessage"] as string;
+                    if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger bg-danger">
+                            @errorMessage
+                        </div>
+                    }
+                }
+
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label asp-for="ParentId" class="control-label">Danh mục cha</label>
+                            <select asp-for="ParentId" class="form-control" asp-items="@(ViewData["ParentCategories"] as IEnumerable<SelectListItem>)">
+                                <option value="">Không có danh mục cha</option>
+                            </select>
+                            <span asp-validation-for="ParentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label asp-for="Image" class="control-label">Hình ảnh</label>
+                            <input asp-for="Image" class="form-control-file" type="file" id="imageUpload" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 100px; height: 100px; margin-top: 10px;" />
+                        </div>
+
+                        <div class="form-group form-check col-12 ml-3">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                            </label>
+                        </div>
+
+                        <div class="d-flex col-12">
+                            <div class="form-group ">
+                                <input type="submit" value="Tạo mới" class="btn btn-success" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/adminThienAn/js/heper-upImg_Time.js"></script>
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

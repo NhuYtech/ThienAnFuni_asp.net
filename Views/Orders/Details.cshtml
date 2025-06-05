@@ -1,0 +1,183 @@
+﻿@model ThienAnFuni.Models.Order
+@using ThienAnFuni.Helpers
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section breadcrumb {
+    <section class="breadcrumb-section set-bg" data-setbg="/customerThienAn/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Thien An Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a asp-action="Index" asp-controller="Home">Trang chủ</a>
+                            <a asp-action="Index" asp-controller="Orders">Đơn hàng</a>
+                            <span>Chi tiết đơn hàng #@Model.Id</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product text-center">Mã SP</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Số lượng</th>
+                                <th>Tổng tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@order.Product.Id</td>
+                                    <td>@order.Product?.Name</td>
+                                    <td>
+                                        @if (order.Product?.MainImg != null && order.Product.MainImg.Any())
+                                        {
+                                            <img src="/adminThienAn/image_product/@order.Product.MainImg" alt="@order.Product?.Name" style="width: 100px;" />
+                                        }
+                                        else
+                                        {
+                                            <span>Không có hình ảnh</span>
+                                        }
+                                    </td>
+                                    <td>@order.Quantity</td>
+                                    <td>@string.Format("{0:0,0}đ", order.PriceAtOrder)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a asp-controller="Shop" asp-action="Index" class="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+
+<div class="container">
+    <div class="col-lg-12 text-center set-bg bg-info">
+        <h3 class="text-center font-weight-bold text-light pt-1 pb-1">CHI TIẾT ĐƠN HÀNG</h3>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <tbody>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Customer)</th>
+                <td>@(Model.Customer?.FullName ?? "Chưa cập nhật khách hàng")</td>
+            </tr>
+            @* <tr>
+                <th>@Html.DisplayNameFor(model => model.CustomerPhoneNumber)</th>
+                <td>@Html.DisplayFor(model => model.CustomerPhoneNumber)</td>
+            </tr> *@
+
+            @* hiển thị số điện thoại của người dùng*@
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.CustomerPhoneNumber)</th>
+                <td>@Model.Customer?.PhoneNumber</td>
+            </tr>
+
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.TotalPrice)</th>
+                <td>@Model.TotalPrice.ToString("n0")đ</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.TotalQuantity)</th>
+                <td>@Html.DisplayFor(model => model.TotalQuantity)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Note)</th>
+                <td>@(Model.Note ?? "Không có ghi chú")</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Address)</th>
+                <td>@Html.DisplayFor(model => model.Address)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                <td>@Html.DisplayFor(model => model.OrderDate)</th>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.OrderStatus)</th>
+                <td class="font-weight-bold @OrderStatusHelper.ReturnCssStatus(Model.OrderStatus.ToString())">@ConstHelper.GetOrderStatus((ConstHelper.OrderStatus)Model.OrderStatus)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.PaymentMethod)</th>
+                <td>@ConstHelper.GetPaymentMethod((ConstHelper.PaymentMethod)Model.PaymentMethod)</td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h4 class="w-100 text-center font-weight-bold text-light pt-1 pb-1 bg-info">Thông tin hóa đơn</h4>
+                </td>
+            </tr>
+            @* Đây là thông tin khi có hóa đơn, lúc này hàng dc duyệt và đã được giao thành công *@
+            @if (Model.InvoiceNumber != null)
+            {
+
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.InvoiceNumber)</th>
+                    <td>@(Model.InvoiceNumber ?? "Chưa có hóa đơn")</td>
+                    @* <td>@Html.DisplayFor(model => model.InvoiceNumber)</td> *@
+                </tr>
+
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.PaymentStatus)</th>
+                    @* <td>@ConstHelper.GetPaymentStatus((ConstHelper.PaymentStatus)Model.PaymentStatus)</td> *@
+                    <td>
+                        @ConstHelper.GetPaymentStatus((ConstHelper.PaymentStatus)(Model.PaymentStatus ?? -3))
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.InvoiceDate)</th>
+                    @* <td>@(Model.InvoiceDate ?? "Không có ghi chú")</td> *@
+                    <td>@Html.Raw(Model.InvoiceDate?.ToString("dd/MM/yyyy") ?? "Không có ngày hóa đơn")</td>
+
+                    @* <td>@Html.DisplayFor(model => model.InvoiceDate)</th> *@
+                </tr>
+
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.SaleStaff)</th>
+                    <td>@(Model.SaleStaff?.FullName ?? Model.Manager?.FullName ?? "Chưa cập nhật nhân viên")</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">
+                        <h4 class="w-100 text-center font-italic text-info pt-1 pb-1">Chưa xuất hóa đơn</h4>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+@* <div class="container mt-3 mb-3 text-center">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Chỉnh sửa</a> |
+    <a asp-action="Index" class="btn btn-outline-danger">Quay lại</a>
+</div> *@

@@ -1,0 +1,180 @@
+﻿@using ThienAnFuni.Helpers
+@model ThienAnFuni.Models.Order
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="app-title">
+    <ul class="app-breadcrumb breadcrumb side">
+        <li class="breadcrumb-item active"><a href="#"><b>Danh sách đơn hàng</b></a></li>
+    </ul>
+    <div id="clock"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="row element-button">
+                    <div class="col-sm-2">
+                        <a class="btn btn-warning btn-sm" asp-controller="AdminOrders" asp-action="ListDeleted" title="Đơn hàng đã hủy">
+                            <i class="fa fa-trash"></i>
+                            Danh sách đơn đã hủy
+                        </a>
+                    </div>
+                </div>
+                <h3 class="p-2 text-center bg-success">Chi tiết đơn hàng</h3>
+                <div class="row">
+                    <!-- admin -->
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Nhân viên bán hàng</label>
+                        <input class="form-control" type="text" value="@((Model.SaleStaff?.FullName ?? Model.Manager?.FullName) ?? "(Chưa có thông tin)")" disabled>
+                    </div>
+
+                    <!-- khách hàng -->
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Khách hàng</label>
+                        <input class="form-control" type="text" value="@(Model.Customer?.FullName ?? " (Chưa có thông tin)")" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Mã đơn hàng -->
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Mã đơn hàng</label>
+                        <input class="form-control" type="text" value="#@Model.Id" disabled>
+                    </div>
+
+                    <!-- Trạng thái đơn hàng-->
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Trạng thái đơn hàng</label>
+                        <input class="form-control" type="text"
+                               value="@(Model?.OrderStatus != null
+                                   ? ConstHelper.GetOrderStatus((ConstHelper.OrderStatus)Model.OrderStatus.Value)
+                                   : "Trạng thái không xác định")"
+                               disabled>
+                    </div>
+
+                    <!-- Ngày tạo -->
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Ngày đặt hàng</label>
+                        @* <input class="form-control" type="text" value="@Model?.OrderDate.ToString("dd/MM/yyyy HH:mm")" disabled> *@
+                        <input class="form-control" type="text" value="@(Model?.OrderDate != null
+                            ? Model.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                            : "N/A")" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Mã hóa đơn -->
+                    <div class="form-group col-md-5">
+                        <label class="control-label">Mã hóa đơn</label>
+                        @* <input class="form-control" type="text" value="#@Model?.InvoiceNumber" disabled> *@
+                        <input class="form-control" type="text" value="@(Model?.InvoiceNumber ?? " (Trống)")" disabled>
+
+                    </div>
+
+                    <!-- Ngày tạo hóa đơn-->
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Ngày tạo hóa đơn</label>
+                        @*  <input class="form-control" type="text"
+                        value="@(Model.InvoiceDate.HasValue ? Model?.InvoiceDate.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")"
+                        disabled> *@
+                        <input class="form-control" type="text" value="@(Model?.InvoiceDate != null
+                            ? Model.InvoiceDate.Value.ToString("dd/MM/yyyy HH:mm")
+                            : "(Trống)")" disabled>
+                    </div>
+
+
+                    <!-- Tổng tiền -->
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Tổng tiền</label>
+                        @* <input class="form-control" type="text" value="@CurrencyHelper.FormatCurrencyVNĐ(Model.TotalPrice)" disabled> *@
+                        <input class="form-control" type="text" value="@(Model?.TotalPrice != null
+                            ? CurrencyHelper.FormatCurrencyVNĐ(Model.TotalPrice)
+                            : "0đ")" disabled>
+
+                    </div>
+
+                    <!-- Phương thức thanh toán -->
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Phương thức thanh toán</label>
+                        @*  <input class="form-control" type="text" value="@ConstHelper.GetPaymentStatus((ConstHelper.PaymentStatus)Model?.PaymentStatus)" disabled> *@
+                        <input class="form-control" type="text" value="@(Model?.PaymentStatus != null
+                            ? ConstHelper.GetPaymentStatus((ConstHelper.PaymentStatus)Model.PaymentStatus.Value)
+                            : "(Trống)")" disabled>
+                    </div>
+
+                    <!-- Trạng thái thanh toán -->
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Trạng thái thanh toán</label>
+                        <input class="form-control" type="text" value="@ConstHelper.GetPaymentMethod((ConstHelper.PaymentMethod)Model?.PaymentMethod)" disabled>
+                    </div>
+
+                    <!-- Ghi chú -->
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Ghi chú</label>
+                        <textarea class="form-control" disabled>@(Model?.Note ?? "(Trống)")</textarea>
+                    </div>
+
+
+                    <!-- Địa chỉ giao hàng -->
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Địa chỉ giao hàng</label>
+                        <textarea class="form-control" disabled>@(Model?.Address ?? "(Trống)")</textarea>
+                    </div>
+
+                </div>
+
+                <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                       id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.OrderDetails ?? new List<OrderDetail>())
+                        @* @foreach (var detail in Model.OrderDetails) *@
+                        {
+                            <tr>
+                                <td>@detail.Product?.Name</td>
+                                <td>@detail.Quantity</td>
+                                <td>@CurrencyHelper.FormatCurrencyVNĐ(detail.PriceAtOrder)</td>
+                                <td>@CurrencyHelper.FormatCurrencyVNĐ(detail.PriceAtOrder * detail.Quantity)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-dark" asp-action="Index"> Trở về</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/adminThienAn/js/heper-upImg_Time.js"></script>
+    <style>
+        .status-reject {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-success {
+            color: green;
+            font-weight: bold;
+        }
+
+    </style>
+}

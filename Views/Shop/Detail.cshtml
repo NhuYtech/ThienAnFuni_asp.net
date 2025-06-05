@@ -1,0 +1,168 @@
+﻿@model ThienAnFuni.Models.Product
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumb {
+    <section class="breadcrumb-section set-bg" data-setbg="/customerThienAn/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Thien An Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a asp-action="Index" asp-controller="Home">Trang chủ</a>
+                            <a asp-action="Index" asp-controller="Shop">Shop</a>
+                            <span>Chi tiết sản phẩm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="/adminThienAn/image_product/@Model.MainImg" alt="@Model.Name">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        @* <img data-imgbigurl="img/product/details/product-details-2.jpg"
+                        src="/customerThienAn/img/product/details/thumb-1.jpg" alt=""> *@
+                        @foreach (var img in Model.ProductImages)
+                        {
+                            <img data-imgbigurl="/adminThienAn/image_product/@img.ImgURL"
+                                 src="~/adminThienAn/image_product/@img.ImgURL" alt="Ảnh phụ">
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.Name</h3>
+                    <div class="product__details__price">@($"{Model.Price:N0}đ")</div>
+                    <p>
+                        @Html.Raw(Model.Material)
+                    </p>
+
+                    <div class="product__details__quantity">
+                        <div class="pro-qty">
+                            <input type="text" value="1">
+                        </div>
+                    </div>
+
+                    <!-- Thêm vào giỏ hàng hoặc thông báo hết hàng -->
+                    <a href="#" class="primary-btn add-to-cart" data-id="@Model.Id"
+                       style="@(ViewBag.AvailableQuantity < 1 ? "pointer-events: none; opacity: 0.5;" : "")">
+                        Thêm vào giỏ
+                    </a>
+
+                    @if (ViewBag.AvailableQuantity < 1)
+                    {
+                        <h6 style="color: red">Sản phẩm hết hàng.</h6>
+                    }
+
+
+                    @*  <div class="product__details__quantity">
+                    <div class="quantity">
+                    <div class="pro-qty">
+                    <input type="text" value="1">
+                    </div>
+                    </div>
+                    </div> *@
+
+
+                    <ul>
+                        @* <li><b>Danh mục</b> <span>@(Model.Category?.Name ?? "")</span></li> *@
+
+                        <li>
+                            <b>Danh mục</b>
+                            <a href="@Url.Action("Index", "Shop", new { slug = Model.Category?.Slug })"
+                               style="color: black; text-decoration: underline;">
+                                @Model.Category?.Name
+                            </a>
+                        </li>
+
+                        <li><b>Tiêu chuẩn</b> <span>@Model.Standard</span></li>
+                        <li><b>Màu sắc</b> <span>@Model.Color</span></li>
+                        <li><b>Thời hạn bảo hành</b> <span>@Model.WarrantyPeriod</span></li>
+
+                        <li><b>Kích thước</b> <span>@Model.Dimension</span></li>
+
+                        <li>
+                            <b>Chia sẽ</b>
+                            <div class="share">
+                                <a href="https://www.facebook.com/ariety06/" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="https://www.instagram.com/_nhw.yie24/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">Mô tả chi tiết</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Thông tin sản phẩm</h6>
+                                <p>
+                                    @Html.Raw(Model.Description)
+                                </p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+<!-- Related Product Section Begin -->
+<section class="related-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title related__product__title">
+                    <h2>Sản phẩm liên quan</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var product in ViewBag.RelatedProducts)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="/adminThienAn/image_product/@product.MainImg">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#" class="add-to-cart" data-id="@product.Id"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="product__item__text">
+                            <h6><a asp-action="Detail" asp-route-id="@product.Id">@product.Name</a></h6>
+                            <h5>@($"{product.Price:N0} VNĐ")</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<!-- Related Product Section End -->
