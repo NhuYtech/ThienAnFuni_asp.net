@@ -102,48 +102,7 @@ Hệ thống được xây dựng nhằm hỗ trợ Công ty Thiên Ân tại C�
 💻 *Source code hiện đang được phát triển và cập nhật thường xuyên tại:*  
 🔗 [https://github.com/NhuYsea/ThienAnFuni_aspnet](https://github.com/NhuYtech/ThienAnFuni_asp.net)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
 
 # Account:
 - `Admin`: 
