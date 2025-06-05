@@ -1,3 +1,150 @@
+# 🛒 Website bán hàng nội thất Thiên Ân – Cần Thơ
+
+📌 **Đồ án môn Hệ thống thông tin 1**  
+📍 Trường Đại học Kỹ thuật – Công nghệ Cần Thơ (CTUT)  
+👨‍🏫 Giảng viên hướng dẫn: TS. Nguyễn Trung Việt
+
+👨‍💻 Nhóm sinh viên thực hiện:  
+- Huỳnh Như Ý – HTTT2211015  
+- Nguyễn Thành Đạt – HTTT2211003  
+- Nguyễn Trần Anh Khoa – HTTT2211026  
+
+---
+
+## 🎯 Mục tiêu của hệ thống
+
+Hệ thống được xây dựng nhằm hỗ trợ Công ty Thiên Ân tại Cần Thơ trong quá trình chuyển đổi từ mô hình kinh doanh truyền thống sang mô hình thương mại điện tử, giúp:
+
+- Tăng khả năng tiếp cận khách hàng tiềm năng.
+- Tự động hóa quy trình bán hàng, quản lý đơn hàng và sản phẩm.
+- Cung cấp trải nghiệm mua sắm tiện lợi, hiện đại cho khách hàng.
+
+---
+
+## 🧩 Các chức năng chính
+
+### 👤 Quản lý tài khoản
+- Đăng nhập/đăng xuất
+- Cập nhật thông tin cá nhân
+- Phân quyền: Admin, Nhân viên, Khách hàng
+
+### 🛍️ Quản lý sản phẩm
+- Thêm, sửa, xóa sản phẩm
+- Quản lý danh mục sản phẩm
+- Xem chi tiết sản phẩm
+
+### 📦 Quản lý đơn hàng
+- Đặt hàng, xác nhận đơn hàng
+- Theo dõi tình trạng đơn hàng
+- Lịch sử mua hàng
+
+### 🧑‍🤝‍🧑 Quản lý người dùng
+- Quản lý thông tin khách hàng
+- Quản lý nhân viên bán hàng
+
+### 🏭 Quản lý nhà cung cấp & nhập hàng
+- Thêm, sửa, xóa nhà cung cấp
+- Ghi nhận lô hàng nhập kho
+
+### 📊 Dashboard & thống kê
+- Tổng quan khách hàng, sản phẩm, đơn hàng, doanh thu
+- Thống kê sản phẩm sắp hết hàng
+- Báo cáo doanh thu theo thời gian
+
+---
+
+## 🛠️ Công nghệ sử dụng
+
+| Thành phần             | Công nghệ                   |
+|------------------------|-----------------------------|
+| Ngôn ngữ lập trình     | C#, HTML/CSS, JavaScript    |
+| Framework chính        | ASP.NET Core MVC            |
+| ORM                    | Entity Framework Core       |
+| Cơ sở dữ liệu          | Microsoft SQL Server        |
+| Thiết kế giao diện     | Razor Pages, Bootstrap      |
+| Mô hình hóa            | PlantUML (Use Case, Class)  |
+
+---
+
+## 👥 Đối tượng sử dụng
+
+- **Quản lý cửa hàng (Admin)**: Quản lý toàn bộ hệ thống, nhân viên, sản phẩm, đơn hàng, thống kê.
+- **Nhân viên bán hàng**: Quản lý khách hàng, đơn hàng, đặt hàng cho khách.
+- **Khách hàng**: Đăng ký tài khoản, duyệt sản phẩm, mua hàng, xem lịch sử.
+
+---
+
+## 💡 Các điểm nổi bật
+
+- 🧠 Ứng dụng mô hình MVC giúp dễ dàng mở rộng và bảo trì.
+- 🔐 Phân quyền người dùng rõ ràng theo vai trò.
+- 📈 Dashboard thống kê trực quan.
+- 🛒 Giao diện thân thiện, hỗ trợ thao tác nhanh gọn.
+- 💾 Lưu trữ dữ liệu an toàn với SQL Server.
+
+---
+
+## 📌 Ghi chú
+
+Đây là đồ án học phần Hệ thống thông tin 1, được thực hiện tại Trường Đại học Kỹ thuật – Công nghệ Cần Thơ, nhằm mô phỏng và hiện thực hóa quy trình bán hàng thực tế tại **công ty bán hàng nội thất Thiên Ân – Cần Thơ**.
+
+---
+
+## 📬 Liên hệ
+
+- 👩‍💻 Sinh viên: **Huỳnh Như Ý** – HTTT2211015  
+- 📞 Hotline: 0982 147 252  
+- 📧 Email: hnyhttt2211015@student.ctuet.edu.vn  
+- 🔗 GitHub: [https://github.com/NhuYsea](https://github.com/NhuYtech)
+
+---
+
+💻 *Source code hiện đang được phát triển và cập nhật thường xuyên tại:*  
+🔗 [https://github.com/NhuYsea/ThienAnFuni_aspnet](https://github.com/NhuYtech/ThienAnFuni_asp.net)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Account:
 - `Admin`: 
   - `Username`: `sinoo`
